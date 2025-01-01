@@ -8,6 +8,8 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import com.example.cardatabase.domain.AppUser;
+import com.example.cardatabase.domain.AppUserRepository;
 import com.example.cardatabase.domain.Car;
 import com.example.cardatabase.domain.CarRepository;
 import com.example.cardatabase.domain.Owner;
@@ -20,12 +22,14 @@ public class CardatabaseApplication implements CommandLineRunner {
 
 	private final CarRepository repository;
 	private final OwnerRepository orepository;
+	private final AppUserRepository urepository;
 
 
 
-	public CardatabaseApplication(CarRepository repository, OwnerRepository orepository) {
+	public CardatabaseApplication(CarRepository repository, OwnerRepository orepository, AppUserRepository urepository) {
 		this.repository = repository;
 		this.orepository = orepository;
+		this.urepository = urepository;
 	}
 
 	public static void main(String[] args) {
@@ -45,6 +49,12 @@ public class CardatabaseApplication implements CommandLineRunner {
 		repository.save(new Car("Nissan", "Leaf", "White", "SSJ-3002", 2020, 29000, owner2));
 		repository.save(new Car("Toyota", "Prius", "Silver", "KKO-0212", 2022, 39000, owner2));
 		repository.save(new Car("Chevrolet", "Silverado", "Green", "ZPO-1645", 2024, 79000, owner3));
+		
+		// Username: user, password: user
+		urepository.save(new AppUser("user", "$2a$10$NVM0n8ElaRgg7zWO1CxUdei7vWoPg91Lz2aYavh9.f9q0e4bRadue", "USER"));
+		// Username: admin, password: admin
+		urepository.save(new AppUser("admin","$2a$10$8cjz47bjbR4Mn8GMg9IZx.vyjhLXR/SKKMSZ9.mP9vpMu0ssKi8GW", "ADMIN"));
+		
 
 		
 		// Fetch all cars and log to console
